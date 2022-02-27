@@ -1,5 +1,5 @@
 module dut_top (
-    input   clk;
+    input   clk
 );
     initial begin
         $display("dut_top module");

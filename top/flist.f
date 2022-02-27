@@ -1,4 +1,4 @@
-../dut/dut_top.v
+../../dut/dut_top.v
 
 //dut
-top_tb.sv
+../../top/top_tb.sv
