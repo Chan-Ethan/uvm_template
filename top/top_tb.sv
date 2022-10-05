@@ -2,6 +2,13 @@ module top_tb (
     
 );
     reg clk;
+    shortint a = 'hff89;
+    shortint b = 'h0089;
+    bit [3:0] c = '1;
+    initial begin
+        $display("a = %b \nb = %b", a, b);
+        $display("c = %b", c);
+    end
     initial begin   
         clk = 0;
         $display("uvm top_tb");
