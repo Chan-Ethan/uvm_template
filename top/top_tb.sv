@@ -17,7 +17,7 @@ module top_tb (
     end
 
     initial begin
-        $fsdbDumpfile("testname.fsdb");  //记录波形，波形名字testname.fsdb
+        $fsdbDumpfile("./fsdb/tb.fsdb");  //记录波形，波形名字testname.fsdb
         $fsdbDumpvars("+all");  //+all参数，dump SV中的struct结构体
         $fsdbDumpSVA();   //将assertion的结果存在fsdb中
         //$fsdbDumpMDA(0, top);  //dump memory arrays
