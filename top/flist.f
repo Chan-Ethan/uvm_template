@@ -1,4 +1,6 @@
+// DUT
 ../../dut/dut_top.v
 
-//dut
+// UVM platform
+../../driver/driver.sv
 ../../top/top_tb.sv

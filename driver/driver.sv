@@ -1,18 +1,19 @@
+`include "uvm_macros.svh"
 import uvm_pkg::*;
 
-class my_driver extends uvm_driver #(my_sequence);
+class my_driver extends uvm_driver;
   	// `uvm_component_utils(my_driver)
   
   	function new(string name = "my_driver", uvm_component parent = null);
     	super.new(name, parent);
   	endfunction
 
-  	extends virtual task main_phase(uvm_phase phase);
+  	extern virtual task main_phase(uvm_phase phase);
 endclass
 
 task my_driver::main_phase(uvm_phase phase);
-  	top_tb.rxd <= 8'b0
-  	top_tb.rx_dv <= 1'b0
+  	top_tb.rxd <= 8'b0;
+  	top_tb.rx_dv <= 1'b0;
   	
 	while (!top_tb.rst_n) begin
 		@(posedge top_tb.clk);

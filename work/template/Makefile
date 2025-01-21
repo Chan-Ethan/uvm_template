@@ -2,6 +2,7 @@
 FILE_LIST = ../../top/flist.f
 tc = simple_test
 VERBOSITY = HIGH
+UVM_HOME = ../../uvm-1.1d/uvm-1.1d
 
 compile:
 	vcs	\
@@ -14,6 +15,8 @@ compile:
 	-ntb_opts uvm-1.1 \
 	-timescale=1ns/1ns \
 	-fsdb \
+	+incdir+dirctory+$(UVM_HOME)/src \
+	$(UVM_HOME)/src/uvm.sv \
 	-f $(FILE_LIST) \
 	-l ./comp_log/$(tc).log \
 	#-o $(tc).o
@@ -41,4 +44,5 @@ wave:
 clean:
 	rm -rf *.log ucli.key vc_hdrs.h csrc simv* verdiLog novas* ./comp_log/* ./sim_log/* ./fsdb/*
 
-all: compile sim
+all: clean compile sim
+all2: all wave

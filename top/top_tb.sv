@@ -1,19 +1,28 @@
 module top_tb (
     
 );
-    reg clk;
-    shortint a = 'hff89;
-    shortint b = 'h0089;
-    bit [3:0] c = '1;
-    initial begin
-        $display("a = %b \nb = %b", a, b);
-        $display("c = %b", c);
-    end
+    logic           clk     ;
+    logic           rst_n   ;
+    logic   [7: 0]  rxd     ;
+    logic           rx_dv   ;
+    logic   [7: 0]  txd     ;
+    logic           tx_en   ;
+
     initial begin   
-        clk = 0;
+        clk = 1'b0;
+        rst_n = 1'b1;
         $display("uvm top_tb");
-        #100us;
-        $finish();
+
+        // #100us;
+        rst_n = 1'b0;
+        $display("rst_n active");
+        
+        #200us;
+        rst_n = 1'b1;
+        $display("reset finish");
+
+        // #600us;
+        // $finish();
     end
 
     initial begin
@@ -27,5 +36,19 @@ module top_tb (
         #4ns;   clk <= ~clk;
     end
 
-    dut_top dut(clk);
+    dut_top dut_top (
+        .clk    (clk    ),
+        .rst_n  (rst_n  ),
+        .rxd    (rxd    ),
+        .rx_dv  (rx_dv  ),
+        .txd    (txd    ),
+        .tx_en  (tx_en  )
+    );
+
+    initial begin
+        my_driver drv;
+        drv = new("drv", null);
+        drv.main_phase(null);
+        $finish();
+    end
 endmodule
