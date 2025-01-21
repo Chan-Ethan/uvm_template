@@ -2,5 +2,5 @@
 ../../dut/dut_top.v
 
 // UVM platform
-../../driver/driver.sv
+../../my_port/driver.sv
 ../../top/top_tb.sv
