@@ -46,9 +46,7 @@ module top_tb (
     );
 
     initial begin
-        my_driver drv;
-        drv = new("drv", null);
-        drv.main_phase(null);
+        run_test("my_driver");
         $finish();
     end
 endmodule
