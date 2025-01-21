@@ -39,6 +39,6 @@ wave:
     & 
 
 clean:
-	rm -rf *.log ucli.key vc_hdrs.h csrc simv* verdiLog novas*
+	rm -rf *.log ucli.key vc_hdrs.h csrc simv* verdiLog novas* ./comp_log/* ./sim_log/* ./fsdb/*
 
 all: compile sim
