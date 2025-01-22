@@ -30,6 +30,17 @@ class my_transaction extends uvm_sequence_item;
         super.new(name);
     endfunction
 
+    extern virtual function void my_print();
 endclass
+
+function void my_transaction::my_print();
+    $display("dmac = %0h", dmac);
+    $display("smac = %0h", smac);
+    $display("ether_type = %0h", ether_type);
+    for (int i = 0; i < pload.size(); i++) begin
+        $display("pload[%0d] = %0h", i, pload[i]);
+    end
+    $display("crc = %0h", crc);
+endfunction
 
 `endif // MY_TRANSACTION_SV

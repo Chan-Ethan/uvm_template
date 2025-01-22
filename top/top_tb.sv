@@ -49,12 +49,13 @@ module top_tb (
     );
 
     initial begin
-        run_test("my_driver");
+        run_test("my_env");
         $finish();
     end
 
     initial begin
-        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top", "vif", input_if);
-        // uvm_config_db#(virtual my_if)::set(null, "*", "vif", output_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.i_agt.drv", "vif", input_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.i_agt.mon", "vif", input_if);
+        uvm_config_db#(virtual my_if)::set(null, "uvm_test_top.o_agt.mon", "vif", output_if);
     end
 endmodule

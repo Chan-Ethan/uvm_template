@@ -7,17 +7,17 @@ class my_driver extends uvm_driver;
   
   	function new(string name = "my_driver", uvm_component parent = null);
     	super.new(name, parent);
-		`uvm_info("my_driver", "my_driver is created", UVM_LOW)
+		`uvm_info("my_driver", "my_driver is created", UVM_MEDIUM)
   	endfunction
 
-  	extern virtual task main_phase(uvm_phase phase);
 	extern virtual function void build_phase(uvm_phase phase);
+  	extern virtual task main_phase(uvm_phase phase);
 	extern virtual task drive_one_pkt(my_transaction tr);
 endclass
 
 function void my_driver::build_phase(uvm_phase phase);
 	super.build_phase(phase);
-	`uvm_info("my_driver", "my_driver build_phase", UVM_LOW)
+	`uvm_info("my_driver", "my_driver build_phase", UVM_MEDIUM)
 	if (!uvm_config_db#(virtual my_if)::get(this, "", "vif", vif)) begin
 		`uvm_fatal("my_driver", "virtual interface must be set for vif!")
 	end
@@ -27,7 +27,7 @@ task my_driver::main_phase(uvm_phase phase);
 	my_transaction tr;
 
 	phase.raise_objection(this);
-	`uvm_info("my_driver", "my_driver main_phase", UVM_LOW)
+	`uvm_info("my_driver", "my_driver main_phase", UVM_MEDIUM)
 
 	vif.data <= 8'b0;
 	vif.valid <= 1'b0;
