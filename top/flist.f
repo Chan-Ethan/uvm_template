@@ -3,5 +3,6 @@
 
 // UVM platform
 ../../my_port/my_if.sv
+../../my_port/my_transaction.sv
 ../../my_port/driver.sv
 ../../top/top_tb.sv
