@@ -88,7 +88,7 @@ task my_driver::drive_one_pkt(my_transaction tr);
 	while(data_q.size() > 0) begin
 		@(posedge vif.clk);
 		vif.valid <= 1'b1;
-		vid.data <= data_q.pop_front();
+		vif.data <= data_q.pop_front();
 	end
 
 	@(posedge vif.clk);
