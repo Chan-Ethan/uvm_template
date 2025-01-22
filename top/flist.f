@@ -7,5 +7,5 @@
 ../../my_port/my_monitor.sv
 ../../my_port/my_driver.sv
 ../../my_port/my_agent.sv
-../../my_port/my_env.sv
+../../env/my_env.sv
 ../../top/top_tb.sv

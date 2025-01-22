@@ -64,8 +64,9 @@ task my_monitor::collect_one_pkt(my_transaction tr);
 
 	// pop pload from data_q
 	pload_size = data_q.size();
+    tr.pload = new[pload_size-4];
 	for (int i = 0; i < pload_size; i++) begin
-		tr.pload.push_back(data_q.pop_front());
+		tr.pload[i] = data_q.pop_front();
 	end
 
 	// pop crc from data_q
