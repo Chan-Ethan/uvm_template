@@ -1,10 +1,7 @@
 `ifndef MY_DRIVER_SV
 `define MY_DRIVER_SV
 
-`include "uvm_macros.svh"
-import uvm_pkg::*;
-
-class my_driver extends uvm_driver);
+class my_driver extends uvm_driver;
   	`uvm_component_utils(my_driver)
 	virtual my_if vif;
   
@@ -52,18 +49,18 @@ task my_driver::main_phase(uvm_phase phase);
 endtask
 
 task my_driver::drive_one_pkt(my_transaction tr);
-	bit [7:0] 	data_q[$];
+	bit [7:0] 	data_array[];
 	int  		data_size;
 
-	data_size = tr.pack_bytes(data_q) / 8;
+	data_size = tr.pack_bytes(data_array) / 8;
 
 	`uvm_info("my_driver", "begin to drive one pkt", UVM_LOW)
 	repeat(3) @(posedge vif.clk);
 
-	while(data_q.size() > 0) begin
+    foreach (data_array[i]) begin
 		@(posedge vif.clk);
 		vif.valid <= 1'b1;
-		vif.data <= data_q.pop_front();
+		vif.data <= data_array[i];
 	end
 
 	@(posedge vif.clk);

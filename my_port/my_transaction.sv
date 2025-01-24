@@ -32,8 +32,6 @@ class my_transaction extends uvm_sequence_item;
         crc = cal_crc();
     endfunction
 
-    `uvm_object_utils(my_transaction)
-
     function new(string name = "my_transaction");
         super.new(name);
     endfunction
