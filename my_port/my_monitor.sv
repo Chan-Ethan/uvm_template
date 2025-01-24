@@ -3,6 +3,7 @@
 
 class my_monitor extends uvm_monitor;
 	virtual my_if vif;
+	uvm_analysis_port #(my_transaction) ap;
 
 	`uvm_component_utils(my_monitor)
   
@@ -23,6 +24,8 @@ function void my_monitor::build_phase(uvm_phase phase);
 	if (!uvm_config_db#(virtual my_if)::get(this, "", "vif", vif)) begin
 		`uvm_fatal("my_monitor", "virtual interface must be set for vif!")
 	end
+
+	ap = new("ap", this);
 endfunction
 
 task my_monitor::main_phase(uvm_phase phase);
@@ -31,6 +34,7 @@ task my_monitor::main_phase(uvm_phase phase);
 	while (1) begin
 		tr = new("tr");
 		collect_one_pkt(tr);
+		ap.write(tr);
 	end
 endtask
 
