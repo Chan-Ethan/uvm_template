@@ -14,7 +14,7 @@ class my_scoreboard extends uvm_scoreboard;
     endfunction
 
     extern virtual function void build_phase(uvm_phase phase);
-    extern virtual function void connect_phase(uvm_phase phase);
+    extern virtual task main_phase(uvm_phase phase);
 endclass
 
 function void my_scoreboard::build_phase(uvm_phase phase);
