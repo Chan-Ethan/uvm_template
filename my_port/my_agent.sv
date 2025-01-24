@@ -36,7 +36,7 @@ function void my_agent::connect_phase(uvm_phase phase);
     `uvm_info("my_agent", "my_agent connect_phase", UVM_MEDIUM)
 
     if (is_active == UVM_ACTIVE) begin
-        sqr.seq_item_port.connect(drv.seq_item_export);
+        drv.seq_item_port.connect(sqr.seq_item_export);
     end
     ap = mon.ap;
 endfunction
