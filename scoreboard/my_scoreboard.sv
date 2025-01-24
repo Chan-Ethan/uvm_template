@@ -44,22 +44,22 @@ task my_scoreboard::main_phase(uvm_phase phase);
             act_port.get(act_tr);
             if (exp_q.size() > 0) begin
                 tmp_tr = exp_q.pop_front();
-                result = act_tr.my_compare(tmp_tr); // compare two transactions
+                result = act_tr.compare(tmp_tr); // compare two transactions
                 if (result) begin
-                    `uvm_info("my_scoreboard", "transaction matched", UVM_LOW)
+                    `uvm_info("CMP_PASS", "transaction matched", UVM_LOW)
                 end
                 else begin
-                    `uvm_error("my_scoreboard", "transaction mismatched")
+                    `uvm_error("CMP_FAIL", "transaction mismatched")
                     $display("the expected transaction is:");
-                    tmp_tr.my_print();
+                    tmp_tr.print();
                     $display("the actual transaction is:");
-                    act_tr.my_print();
+                    act_tr.print();
                 end
             end
             else begin
-                `uvm_error("my_scoreboard", "received from DUT but no expected transaction")
+                `uvm_error("UNEXP_PKT", "received from DUT but no expected transaction")
                 $display("the unexpected transaction is:");
-                act_tr.my_print();
+                act_tr.print();
             end
         end
     join

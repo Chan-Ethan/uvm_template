@@ -32,6 +32,11 @@ task my_monitor::main_phase(uvm_phase phase);
 	my_transaction tr;
 
 	while (1) begin
+		// wait for valid signal
+		while (1) begin
+			@(posedge vif.clk);
+			if (vif.valid) break;
+		end
 		tr = new("tr");
 		collect_one_pkt(tr);
 		ap.write(tr);
@@ -40,12 +45,10 @@ endtask
 
 task my_monitor::collect_one_pkt(my_transaction tr);
 	bit [7:0] 	data_q[$];
-	int pload_size;
-
-	while (1) begin
-		@(posedge vif.clk);
-		if (vif.valid) break;
-	end
+	bit [7:0] 	data_array[];
+	bit [7:0]	data;
+	bit  		valid = 0;
+	int			data_size;
 
 	`uvm_info("my_monitor", "begin to collect one pkt", UVM_LOW)
 	while (vif.valid) begin
@@ -53,33 +56,17 @@ task my_monitor::collect_one_pkt(my_transaction tr);
 		@(posedge vif.clk);
 	end
 
-	// pop dmac from data_q
-	for (int i = 0; i < 6; i++) begin
-		tr.dmac = {tr.dmac[39:0], data_q.pop_front()};
+	// convert queue to array
+	data_size = data_q.size();
+	data_array = new[data_size];
+	foreach (data_q[i]) begin
+		data_array[i] = data_q[i];
 	end
 
-	// pop smac from data_q
-	for (int i = 0; i < 6; i++) begin
-		tr.smac = {tr.smac[39:0], data_q.pop_front()};
-	end
-
-	// pop ether_type from data_q
-	tr.ether_type = {data_q.pop_front(), data_q.pop_front()};
-
-	// pop pload from data_q
-	pload_size = data_q.size();
-    tr.pload = new[pload_size-4];
-	for (int i = 0; i < pload_size; i++) begin
-		tr.pload[i] = data_q.pop_front();
-	end
-
-	// pop crc from data_q
-	for (int i = 0; i < 4; i++) begin
-		tr.crc = {tr.crc[23:0], data_q.pop_front()};
-	end
-
-	`uvm_info("my_monitor", "collect one pkt finish:", UVM_LOW)
-	tr.my_print();
+	// assign to tr
+	tr.pload = new[data_size - 18]; // 18 is header size
+	data_size = tr.unpack_bytes(data_array) / 8;
+	`uvm_info("RECE_PKT", "collect one pkt finish", UVM_LOW)
 endtask
 
 `endif
