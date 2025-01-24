@@ -38,6 +38,12 @@ function void my_env::build_phase(uvm_phase phase);
 
     mdl = my_model::type_id::create("mdl", this);
     scb = my_scoreboard::type_id::create("scb", this);
+
+    // set default sequence for my_sequencer
+    uvm_config_db #(uvm_object_wrapper)::set(this,
+        "i_agt.sqr.main_phase", 
+        "default_sequence", 
+        my_sequence::type_id::get());
 endfunction
 
 function void my_env::connect_phase(uvm_phase phase);

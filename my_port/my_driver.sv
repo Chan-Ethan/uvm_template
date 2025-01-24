@@ -1,7 +1,7 @@
 `ifndef MY_DRIVER_SV
 `define MY_DRIVER_SV
 
-class my_driver extends uvm_driver;
+class my_driver extends uvm_driver #(my_transaction);
   	`uvm_component_utils(my_driver)
 	virtual my_if vif;
   
@@ -24,9 +24,6 @@ function void my_driver::build_phase(uvm_phase phase);
 endfunction
 
 task my_driver::main_phase(uvm_phase phase);
-	my_transaction tr;
-
-	phase.raise_objection(this);
 	`uvm_info("my_driver", "my_driver main_phase", UVM_MEDIUM)
 
 	vif.data <= 8'b0;
@@ -37,22 +34,20 @@ task my_driver::main_phase(uvm_phase phase);
 		@(posedge vif.clk);
   	end
 
-	for(int i = 0; i < 2; i++) begin
-		// generate a random transaction and drive it
-		tr = new("tr");
-		assert (tr.randomize() with {pload.size() == 200;})
-		drive_one_pkt(tr);
+	// wait for transaction from sequencer and then drive it
+	while (1) begin
+		seq_item_port.get_next_item(req);
+		drive_one_pkt(req);
+		seq_item_port.item_done();
 	end
-
-	# 100us;
-	phase.drop_objection(this);
 endtask
 
+// drive one packet to DUT
 task my_driver::drive_one_pkt(my_transaction tr);
 	bit [7:0] 	data_array[];
 	int  		data_size;
 
-	data_size = tr.pack_bytes(data_array) / 8;
+	data_size = tr.pack_bytes(data_array) / 8; // pack tr to data_array
 
 	`uvm_info("my_driver", "begin to drive one pkt", UVM_LOW)
 	repeat(3) @(posedge vif.clk);
