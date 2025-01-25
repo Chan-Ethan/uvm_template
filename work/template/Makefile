@@ -2,6 +2,7 @@
 FILE_LIST = ../../top/flist.f
 tc = simple_test
 VERBOSITY = HIGH
+MAX_QUIT_COUNT = 500
 UVM_HOME = ../../uvm-1.1d/uvm-1.1d
 
 compile:
@@ -18,6 +19,7 @@ compile:
 	+incdir+dirctory+$(UVM_HOME)/src \
 	$(UVM_HOME)/src/uvm.sv \
 	-f $(FILE_LIST) \
+	../../testcase/$(tc).sv \
 	-l ./comp_log/$(tc).log \
 	#-o $(tc).o
 
@@ -27,6 +29,7 @@ sim:
 	-l ./sim_log/$(tc).log \
 	+UVM_VERBOSITY=$(VERBOSITY) \
 	+UVM_TESTNAME=$(tc)	\
+	+UVM_MAX_QUIT_COUNT=$(MAX_QUIT_COUNT) \
 	+define+SIMULATION \
 	+fsdb+autoflush \
 	#+UVM_TR_RECORD \

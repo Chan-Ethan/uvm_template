@@ -49,7 +49,7 @@ module top_tb (
     );
 
     initial begin
-        run_test("my_env");
+        run_test();
         $finish();
     end
 
