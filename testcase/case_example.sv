@@ -1,6 +1,6 @@
 // construct a new sequence: Generates timed transaction
-class new_sequence extends uvm_sequence #(new_transaction);
-    new_transaction tr;
+class new_sequence extends uvm_sequence #(my_transaction);
+    my_transaction tr;
 
     `uvm_object_utils(new_sequence)
 
@@ -16,7 +16,8 @@ class new_sequence extends uvm_sequence #(new_transaction);
         // send 15 random transactions
         repeat (15) begin
             `uvm_do_with(tr, {
-                tr.pload.size = $urandom_range(10, 100);
+                tr.pload.size >= 48;
+                tr.pload.size <= 1024;
             })
             #1us;
         end
@@ -45,7 +46,6 @@ function void case_example::build_phase(uvm_phase phase);
     super.build_phase(phase);
     `uvm_info("case_example", "case_example build_phase", UVM_MEDIUM)
 
-    env = my_env::type_id::create("env", this);
     uvm_config_db #(uvm_object_wrapper)::set(this,
         "env.i_agt.sqr.main_phase", 
         "default_sequence", 
