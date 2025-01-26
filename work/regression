@@ -58,18 +58,9 @@ function run_case() {
 # notes: delete fsdb/vdb/log tmp files,not dir
 #---------------------------------------------------
 function clean_tmp_file() {
-    for tc in `sed /#/d $test_list`
-    do
-        rm -rf $tc/fsdb/*.fsdb
-        rm -rf $tc/sim_log/*
-        rm -rf $tc/comp_log/*
-        rm -rf $tc/*.vdb
-        rm -f  $tc/$tc
-    done
-    rm -rf all_regression/sim_log/*
-    rm -rf all_regression/comp_log/*
-    rm -rf all_regression/fsdb/*
-    rm -rf all_regression/coverage/*
+    shopt -s extglob
+    rm -rf !(template|run)/
+    echo "clean all temp files"
 }
 
 #----------------------------------------------------
@@ -80,7 +71,6 @@ result_dir=all_regression
 print_list=0
 cov=0
 thread_num=10
-clean_all=0
 while getopts 'cCeEhHiIlLpPt:T:u:U:' opt
 do
     case $opt in
@@ -89,7 +79,8 @@ do
                 result_dir=err_regression;;
         h|H)    print_help
                 exit;;
-        i|I)    clean_all=1;;
+        i|I)    clean_tmp_file
+                exit;;
         l|L)    print_list=1;;
         t|T)    thread_num=$OPTARG;;
         *)      echo "[Error] illegal option input, use './set_run_all -h' to get more help"
@@ -109,14 +100,6 @@ then
     echo "-------------------------------------------------------"
     echo
     exit
-fi
-
-#----------------------------------------------------
-# clean all testcase folder and regresion result folder
-#----------------------------------------------------
-if [ $clean_all = 1]
-then
-    rm -rf !(template|run)/
 fi
 
 #----------------------------------------------------
@@ -148,11 +131,6 @@ read result
 if [ $result = 'yes' ]
 then
     echo "begin to run regression"
-elif [ $result = 'clr' ]
-then
-    echo "clear all temporary files"
-    clean_tmp_file
-    exit
 else
     echo "regression stop"
     exit
@@ -161,7 +139,7 @@ fi
 #----------------------------------------------------
 # preparation
 #----------------------------------------------------
-rm -rf $result_dir
+clean_tmp_file
 mkdir $result_dir
 cd run
 chmod 755 check_log check_log_comp
