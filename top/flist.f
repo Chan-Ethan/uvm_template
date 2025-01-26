@@ -13,5 +13,5 @@
 ../../model/my_model.sv
 ../../scoreboard/my_scoreboard.sv
 ../../env/my_env.sv
-../../testcase/base_test.sv
+../../top/base_test.sv
 ../../top/top_tb.sv

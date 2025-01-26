@@ -45,10 +45,9 @@ function print_help() {
 #----------------------------------------------------
 function run_case() {
     rm -rf $1
-    cp -r tpl $1
+    cp -r template $1
     cd $1
-        chmod 755 makefile verdi.tcl
-    make cs tc=$1 cov=$3
+    make all tc=$1 cov=$3
     cp comp_log/* ../$2/comp_log/
     cp sim_log/* ../$2/sim_log/
     cp fsdb/* ../$2/fsdb/
