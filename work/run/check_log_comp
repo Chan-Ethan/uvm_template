@@ -4,8 +4,6 @@
 # File name   : check_log_comp
 # Title       : check regression compile logs
 # Project     : template
-# Createed    : by4469
-# Date        : 2023/2/7
 # Description : 1. read each testcase's compile log
 #               2. print testcase name and 'FAIL' if any compile error was detected
 #               3. print statistic infomation

@@ -36,10 +36,10 @@ function void base_test::report_phase(uvm_phase phase);
     err_num = server.get_severity_count(UVM_ERROR);
 
     if (err_num != 0) begin
-        $display("\n========== TEST CASE FAILED ==========\n");
+        $display("\n========== TEST CASE FAIL ==========\n");
     end
     else begin
-        $display("\n========== TEST CASE PASSED ==========\n");
+        $display("\n========== TEST CASE PASS ==========\n");
     end
 endfunction
 

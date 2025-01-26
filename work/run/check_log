@@ -4,8 +4,6 @@
 # File name   : check_log
 # Title       : check regression compile and simulation logs
 # Project     : template
-# Creator     : by4469
-# Date        : 2023/2/7
 # Description : 1. read each testcase's sim log and print its result
 #               2. calculate and print statistic information
 #               3. run check_log_comp, open check_log_comp script for more infomation
