@@ -32,6 +32,7 @@ sim:
 	+UVM_MAX_QUIT_COUNT=$(MAX_QUIT_COUNT) \
 	+define+SIMULATION \
 	+fsdb+autoflush \
+	+fsdbfile+./fsdb/$(tc).fsdb \
 	#+UVM_TR_RECORD \
 
 # show the code coverage
@@ -41,7 +42,7 @@ wave:
     +define+SIMULATION \
     -f $(FILE_LIST) \
 	-top top_tb \
-    -ssf ./fsdb/tb.fsdb \
+    -ssf ./fsdb/$(tc).fsdb \
     & 
 
 clean:
